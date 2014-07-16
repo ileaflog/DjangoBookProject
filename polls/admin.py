@@ -1,3 +1,13 @@
 from django.contrib import admin
+from polls.models import Poll
+
+# Create meta models
+class PollAdmin(admin.ModelAdmin):
+#    fields = ['pub_date', 'question']
+    fieldsets = [
+        (None, {'fields': ['question', 'priority']}),
+        ('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
+    ]
 
 # Register your models here.
+admin.site.register(Poll, PollAdmin)
