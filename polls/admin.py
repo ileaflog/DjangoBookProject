@@ -1,5 +1,5 @@
 from django.contrib import admin
-from polls.models import Poll
+from polls.models import Poll, Choice
 
 # Create meta models
 class PollAdmin(admin.ModelAdmin):
@@ -11,3 +11,4 @@ class PollAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(Poll, PollAdmin)
+admin.site.register(Choice)
