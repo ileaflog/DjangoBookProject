@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+{% if poll %}
+<p>{{ poll }}</p>
+<ul>
+{% for choice in poll_choice_list %}
+<li>{{ choice }}</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>No polls are available.</p>
+{% endif %}
