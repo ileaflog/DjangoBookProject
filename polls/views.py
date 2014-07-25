@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from polls.models import Poll
@@ -15,7 +15,7 @@ def index(request):
     return render(request, 'polls/index.html', context)
 
 def detail(request, poll_id):
-    poll = Poll.objects.get(pk=poll_id)
+    poll = get_object_or_404(Poll, pk=poll_id)
     poll_choice_list = poll.choice_set.all()
     context = {'poll': poll, 'poll_choice_list': poll_choice_list}
     return render(request, 'polls/detail.html', context)
