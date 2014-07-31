@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.template import RequestContext, loader
 from django.views import generic
+
 
 from polls.models import Choice, Poll
 
@@ -16,13 +16,16 @@ class IndexView(generic.ListView):
         """Return the last five published polls."""
         return Poll.objects.order_by('-pub_date')[:5]
 
+
 class DetailView(generic.DetailView):
     model = Poll
     template_name = 'polls/detail.html'
 
+
 class ResultsView(generic.DetailView):
     model = Poll
     template_name = 'polls/results.html'
+
 
 def vote(request, poll_id):
     p = get_object_or_404(Poll, pk=poll_id)

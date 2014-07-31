@@ -12,7 +12,15 @@ class Poll(models.Model):
         return self.question
     #
     def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        result = False
+
+        now = timezone.now()
+        if (self.pub_date >= now - datetime.timedelta(days=1) and
+            self.pub_date <= now):
+            result = True
+        
+        return result
+
     #
     # What does this dot notation mean?  Do methods really have fields/attributes?
     #
