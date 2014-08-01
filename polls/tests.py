@@ -98,3 +98,17 @@ class PollViewTests(TestCase):
             response.context[PollViewTests.LATEST_POLL_LIST],
                 ['<Poll: Past poll 2.>', '<Poll: Past poll 1.>']
         )
+
+
+class PollDetailTests(TestCase):
+    def test_detail_view_with_a_future_poll(self):
+        future_poll = create_poll(question="Is it 2020 yet?", days=30)
+        response = self.client.get(reverse('polls:detail', args=(future_poll.id,)))
+        self.assertEqual(response.status_code, 404)
+
+    def test_detail_view_with_a_past_poll(self):
+        POLL_QUESTION = "This poll was published?"
+        past_poll = create_poll(question=POLL_QUESTION, days=-15)
+        response = self.client.get(reverse('polls:detail', args=(past_poll.id,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response=response, text=(POLL_QUESTION), status_code=200, html=False)

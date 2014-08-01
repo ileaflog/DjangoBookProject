@@ -14,13 +14,23 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_poll_list'
 
     def get_queryset(self):
-        """Return the last five published polls."""
-        return Poll.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+        """
+        Return the last five published polls that contain choices.
+        """
+        return Poll.objects.filter(choice__isnull=False).distinct().filter(pub_date__lte=timezone.now()).order_by(
+            '-pub_date')[:5]
 
 
 class DetailView(generic.DetailView):
     model = Poll
     template_name = 'polls/detail.html'
+
+    def get_queryset(self):
+        """
+        Excludes polls that aren't published yet.
+        :return:
+        """
+        return Poll.objects.filter(pub_date__lte=timezone.now())
 
 
 class ResultsView(generic.DetailView):
