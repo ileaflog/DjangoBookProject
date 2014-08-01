@@ -18,7 +18,7 @@ class Poll(models.Model):
         if (self.pub_date >= now - datetime.timedelta(days=1) and
             self.pub_date <= now):
             result = True
-        
+
         return result
 
     #
