@@ -68,6 +68,9 @@ class PollViewTests(TestCase):
         self.assertQuerysetEqual(response.context[PollViewTests.LATEST_POLL_LIST], [])
 
     def test_index_view_with_a_past_poll_no_choices(self):
+        """
+        We'll create a poll with no choices an ensure that it does not show up in the index.
+        """
         create_poll(question="No choices.", days=-10, choice_text=None)
         response = self.client.get(reverse('polls:index'))
         self.assertEqual(response.status_code, 200)
